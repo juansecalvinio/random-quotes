@@ -4,10 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Random Quotes | juansecalvinio</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <main class="container">
+        <header>
+          <h1>Random Quotes</h1>
+          <p>This simple application, created with VanillaJS, allows users to generate random quotes with a simple button click. It uses the Quotable.io API to fetch a wide variety of inspiring and motivational quotes, providing users with a new quote each time they interact with the app. Additionally, users can share their favorite quotes on Twitter with the "Tweet quote" button.</p>
+          <p>View code <a href="https://github.com/juansecalvinio/random-quotes" target="_blank">here</a></p>   
+        </header>
+        <div class="quote-wrapper">
+          <div class="quote-content">
+            <div class="quote" id="quote-box">
+              <p class="quote-text" id="text">Loading...</p>
+              <p class="quote-author" id="author">
+              </p>
+              <div class="quote-error" id="error"></div>
+            </div>
+          </div>
+          <div class="quote-footer">
+            <a id="tweet-quote" target="_top" href="https://twitter.com/intent/tweet"><button>Tweet Quote</button></a>
+            <button id="new-quote">New Quote</button>
+          </div>
+        </div>
+        <footer>by <a href="https://juansecalvinio.com" target="_blank">juansecalvinio.com</a></footer>
+      </main>
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

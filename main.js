@@ -1,24 +1,39 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import "./style.css"
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+document.addEventListener("DOMContentLoaded", function () {
+  const quoteText = document.getElementById("text");
+  const quoteAuthor = document.getElementById("author");
+  const quoteError = document.getElementById("error");
+  const newQuoteButton = document.getElementById("new-quote");
+  const tweetQuoteButton = document.getElementById("tweet-quote");
 
-setupCounter(document.querySelector('#counter'))
+  newQuoteButton.addEventListener("click", function () {
+    fetch("https://api.quotable.io/random", {
+      method: "GET"
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log({ data });
+        if (data.statusCode === 404) {
+          throw new Error(data.statusMessage);
+        }
+        const quote = data;
+        quoteText.textContent = `"${quote.content}"`;
+        quoteAuthor.textContent = `- ${quote.author}`;
+
+        tweetQuoteButton.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          `"${quote.content}" - ${quote.author}`
+        )}`;
+      })
+      .catch((error) => {
+        console.error("Error fetching the quote: ", error);
+        quoteText.style.display = "none";
+        quoteAuthor.style.display = "none";
+        quoteError.style.display = "flex";
+        quoteError.textContent =
+          "En este momento no pudimos obtener una frase. Intentá nuevamente más tarde.";
+      });
+  });
+
+  newQuoteButton.click();
+});
